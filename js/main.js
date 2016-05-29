@@ -1,10 +1,10 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-var tmx = new TMXLoader();
+var tmx = new TMXLoader('../assets/basic.json');
 
-canvas.width = tmx.mapsize.x;
-canvas.height = tmx.mapsize.y;
+canvas.width = tmx.canvas.x;
+canvas.height = tmx.canvas.y;
 
 function draw() {
 
