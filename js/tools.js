@@ -4,6 +4,10 @@ var RAD = 2 * Math.PI;
 
 var Tools = {
 
+    getJSON: function(filename) {
+
+    },
+
     degreesToRadians: function(deg) { return deg * (Math.PI / 180); },
     radiansToDegrees: function(rad) { return rad * (180 / Math.PI); },
 
