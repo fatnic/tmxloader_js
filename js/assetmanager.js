@@ -1,12 +1,21 @@
-function AssetManager(base){
+function AssetManager(config){
     this.successCount = 0;
     this.errorCount = 0;
     this.downloadQueue = [];
     this.cache = {};
-    this.base = base;
+    this.base = config.base;
+    this.config = config;
+    console.log(config);
+    this.init();
 }
 
 AssetManager.prototype = {
+
+    init: function() {
+        for (var i=0; i < this.config.paths.length; i++) {
+            this.queueDownload(this.config.paths[i]);
+        }
+    },
 
     queueDownload: function(path) { this.downloadQueue.push(this.base + path); },
 

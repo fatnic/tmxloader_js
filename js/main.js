@@ -2,13 +2,16 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var tmx;
 
-var am = new AssetManager('../assets/');
+var assets = {
+    base: '../assets/',
+    paths: [ 'testtiles.png', 'basic.json' ]
+};
 
-am.queueDownload('sixteen.json');
+var am = new AssetManager(assets);
 am.downloadAll(init);
 
 function init(){
-    tmx = new TMXLoader(am.get('json.sixteen'));
+    tmx = new TMXLoader(am, 'basic');
     canvas.width = tmx.canvas.x;
     canvas.height = tmx.canvas.y;
     draw();

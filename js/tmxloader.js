@@ -1,6 +1,9 @@
-function TMXLoader(json) {
+// Requires: assetmanager.js
+
+function TMXLoader(am, json) {
+    this.am = am;
     this.loaded = false;
-    this.json = json;
+    this.json = am.get('json.' + json);
     this.init();
     this.img = new Image();
 }
@@ -15,24 +18,20 @@ TMXLoader.prototype = {
 
     renderLayer: function(name) {
         var layer = this.json.layers.filter(function(layers) { return layers.name == name; })[0];
-        var imgpath = this.json.tilesets[0].image;
-        var imgname = imgpath.split('.')[0];
+        var imgname = this.json.tilesets[0].image.split('.')[0];
         var tilesetWidth = this.json.tilesets[0].imagewidth;
         var that = this;
-        am.queueDownload(imgpath);
-        am.downloadAll(function(){
-            var sourceX, sourceY;
-            var tileimg = am.get('img.' + imgname);
-            for (var i=0; i < layer.data.length; i++) {
+        var sourceX, sourceY;
+        var tileimg = this.am.get('img.' + imgname);
+        for (var i=0; i < layer.data.length; i++) {
 
-                sourceX = ((layer.data[i] - 1) * that.tile.x) % tilesetWidth;
-                sourceY = Math.floor(((layer.data[i] - 1) * that.tile.x) / tilesetWidth) * that.tile.x;
+            sourceX = ((layer.data[i] - 1) * this.tile.x) % tilesetWidth;
+            sourceY = Math.floor(((layer.data[i] - 1) * this.tile.x) / tilesetWidth) * this.tile.x;
 
-                targetX = (i % that.grid.x) * that.tile.x;
-                targetY = Math.floor((i / that.grid.x)) * that.tile.x;
+            targetX = (i % this.grid.x) * this.tile.x;
+            targetY = Math.floor((i / this.grid.x)) * this.tile.x;
 
-                ctx.drawImage(tileimg, sourceX, sourceY, that.tile.x, that.tile.y, targetX, targetY, that.tile.x, that.tile.y);
-            }
-        });
+            ctx.drawImage(tileimg, sourceX, sourceY, this.tile.x, this.tile.y, targetX, targetY, this.tile.x, this.tile.y);
+        }
     }
 };
