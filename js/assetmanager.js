@@ -5,7 +5,6 @@ function AssetManager(config){
     this.cache = {};
     this.base = config.base;
     this.config = config;
-    console.log(config);
     this.init();
 }
 

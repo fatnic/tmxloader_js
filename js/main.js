@@ -1,24 +1,24 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var tmx;
+var TMX;
 
 var assets = {
     base: '../assets/',
-    paths: [ 'testtiles.png', 'basic.json' ]
+    paths: [ 'testtiles.png', 'basic2.json' ]
 };
 
-var am = new AssetManager(assets);
-am.downloadAll(init);
+var AM = new AssetManager(assets);
+AM.downloadAll(init);
 
 function init(){
-    tmx = new TMXLoader(am, 'basic');
-    canvas.width = tmx.canvas.x;
-    canvas.height = tmx.canvas.y;
+    TMX = new TMXLoader(AM, 'basic2');
+    canvas.width = TMX.canvas.x;
+    canvas.height = TMX.canvas.y;
     draw();
 }
 
 function draw(){
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
-    tmx.renderLayer('floor');
+    TMX.draw(ctx);
 }
