@@ -18,6 +18,7 @@ TMXLoader.prototype = {
         this.tile = new Vec2(this.json.tilewidth, this.json.tileheight);
         this.grid = new Vec2(this.json.width, this.json.height);
         this.tilelayers = this.getLayersByType('tilelayer').map(function(layer) { return layer.name; });
+        this.objectlayers = this.getLayersByType('objectgroup').map(function(layer) { return layer.name; });
     },
 
     autoRender: function() {
