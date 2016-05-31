@@ -32,12 +32,17 @@ TMXLoader.prototype = {
         return this.json.layers.filter(function(layer){ return layer.type == type; });
     },
 
+    getObjectsFromLayer: function(name) {
+        var layer = this.getLayerByName(name);
+        return layer.objects;
+    },
+
     getLayerByName: function(name) {
         return this.json.layers.filter(function(layer){ return layer.name == name; })[0];
     },
 
     drawLayer: function(name, context) {
-        var layer = this.json.layers.filter(function(layers) { return layers.name == name; })[0];
+        var layer = this.getLayerByName(name);
         var imgname = this.json.tilesets[0].image.split('.')[0];
         var tilesetWidth = this.json.tilesets[0].imagewidth;
         var that = this;
