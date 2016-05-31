@@ -2,11 +2,11 @@
 
 function TMXLoader(am, json) {
     this.am = am;
-    this.loaded = false;
     this.json = am.get('json.' + json);
     this.img = new Image();
     this.layers = [];
     this.tilelayers = [];
+    this.objectlayers = [];
     this.rendered = null;
     this.init();
 }
@@ -21,12 +21,18 @@ TMXLoader.prototype = {
     },
 
     autoRender: function() {
-        for(var i=0; i < this.tilelayers.length; i++) { this.renderLayer(this.tilelayers[i]); }
+        for(var i=0; i < this.tilelayers.length; i++) {
+            if (this.getLayerByName(this.tilelayers[i]).visible === false) continue;
+            this.renderLayer(this.tilelayers[i]);
+        }
     },
 
     getLayersByType: function(type) {
-        var l = this.json.layers.filter(function(layer){ return layer.type == 'tilelayer' && layer.visible === true; });
-        return l;
+        return this.json.layers.filter(function(layer){ return layer.type == type; });
+    },
+
+    getLayerByName: function(name) {
+        return this.json.layers.filter(function(layer){ return layer.name == name; })[0];
     },
 
     drawLayer: function(name, context) {
